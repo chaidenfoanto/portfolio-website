@@ -239,6 +239,16 @@ nav.scrolled {
   flex-shrink: 0;
 }
 
+.nav-logo {
+  height: 28px;
+  width: auto;
+  display: block;
+}
+
+.light-mode .nav-logo {
+  content: url('/images/logo-black-crf.png');
+}
+
 .nav-links {
   display: flex;
   align-items: center;
