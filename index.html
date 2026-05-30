@@ -1063,11 +1063,13 @@
     }
 
     .about-photo-wrap {
-      position: relative
+      position: relative;
+      display: flex;
+      justify-content: center;
     }
 
     .about-frame {
-      width: 100%;
+      width: 70%;
       aspect-ratio: 4/5;
       border-radius: 20px;
       border: 1px solid transparent;
@@ -1088,7 +1090,7 @@
     .about-badge {
       position: absolute;
       bottom: -22px;
-      right: -8px;
+      right: 5%;
       transform: rotate(2deg);
       background: rgba(10, 10, 10, 0.88);
       border: 1px solid rgba(255, 255, 255, 0.12);
@@ -1255,9 +1257,7 @@
       padding: 100px 0 120px;
       position: relative;
       overflow: visible;
-      /* Adaptive background using tokens */
-      background: linear-gradient(180deg, var(--proj-bg-from) 0%, var(--proj-bg-to) 100%);
-      transition: background 0.4s;
+      background: transparent
     }
 
     /* Ambient glow behind carousel (dark: faint warm glow, light: blue-purple) */
@@ -1999,8 +1999,8 @@
       display: flex;
       gap: 14px;
       overflow-x: auto;
-      padding: 8px 4px 32px;
-      margin: -8px -4px -16px;
+      padding: 8px 20px 32px;
+      margin: -8px -20px -16px;
       scrollbar-width: none;
     }
 
@@ -2239,6 +2239,22 @@
       border-radius: 50%
     }
 
+    .light-mode .timeline::before {
+      background: rgba(0, 0, 0, 0.18);
+    }
+
+    .light-mode .timeline-item {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.10);
+    }
+
+    .light-mode .timeline-dot {
+      background: #ffffff;
+      border: 2px solid rgba(0, 0, 0, 0.20);
+      box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.05),
+        0 0 8px rgba(0, 0, 0, 0.08);
+    }
+
     .timeline-date {
       font-size: 11px;
       color: var(--text-muted);
@@ -2398,6 +2414,21 @@
       .about-inner {
         grid-template-columns: 1fr;
         gap: 36px
+      }
+
+      .about-photo-wrap {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+
+      .about-frame {
+        width: 70%;
+        max-width: 320px;
+      }
+
+      .about-badge {
+        right: calc(50% - (90% / 2) + 8px);
       }
 
       .stats-bar {
