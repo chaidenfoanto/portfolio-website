@@ -109,16 +109,19 @@
     }
 
     html {
-      scroll-behavior: smooth
+      scroll-behavior: smooth;
+      overflow-x: clip; /* clip lebih kuat dari hidden, tidak menciptakan scroll container baru */
+      max-width: 100%;
     }
 
     body {
       background: var(--bg);
       color: var(--text);
       font-family: 'DM Sans', sans-serif;
-      overflow-x: hidden;
       cursor: none;
       transition: background 0.4s, color 0.4s;
+      overflow-x: clip;
+      max-width: 100%;
     }
 
     /* ══════════════════════════════════════
@@ -188,7 +191,6 @@
         0 8px 32px rgba(0, 0, 0, 0.45),
         0 2px 8px rgba(0, 0, 0, 0.2),
         0 0 0 0.5px rgba(255, 255, 255, 0.06) inset;
-      white-space: nowrap;
       transition: background .35s, box-shadow .35s, border-color .35s;
     }
 
@@ -402,7 +404,8 @@
       border: none;
       cursor: pointer;
       padding: 4px;
-      margin-left: 4px
+      margin-left: 4px;
+      flex-shrink: 0;
     }
 
     .nav-hamburger span {
@@ -516,6 +519,7 @@
       justify-content: center;
       padding: 120px 5% 40px;
       position: relative;
+      overflow: hidden; /* contain .glow-right { right: -180px } dan .glow-left { left: -80px } */
     }
 
     .hero-inner {
@@ -1386,6 +1390,7 @@
       position: relative;
       padding: 10px 0 40px;
       z-index: 2;
+      overflow: hidden; /* contain carousel-track width: max-content */
     }
 
     .carousel-viewport {
@@ -2371,6 +2376,11 @@
     /* ══════════════════════════════════════
    RESPONSIVE
 ══════════════════════════════════════ */
+    /* Desktop: nav boleh nowrap karena lebar cukup */
+    @media(min-width:901px) {
+      nav { white-space: nowrap; }
+    }
+
     @media(max-width:900px) {
       .hero-inner {
         grid-template-columns: 1fr;
@@ -2444,13 +2454,33 @@
         padding: 7px 10px
       }
 
-      .nav-links,
-      .nav-right {
+      .nav-links {
         display: none
       }
 
+      /* Keep theme toggle + CV button visible on mobile, hide CV text */
+      .btn-dl-text {
+        display: none;
+      }
+
       .nav-hamburger {
-        display: block
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      /* Fix navbar: beri lebar eksplisit supaya centering bisa bekerja */
+      nav {
+        width: calc(100vw - 32px);
+        max-width: 480px;
+        left: 50%;
+        transform: translateX(-50%);
+        justify-content: space-between;
+        padding: 0 10px 0 18px;
+      }
+
+      .nav-brand {
+        margin-right: 0;
       }
     }
 
@@ -2460,7 +2490,7 @@
       }
 
       nav {
-        padding: 10px 10px 10px 18px
+        padding: 0 8px 0 14px;
       }
 
       .stat-item {
@@ -2526,12 +2556,12 @@
           <polyline points="7 10 12 15 17 10" />
           <line x1="12" y1="15" x2="12" y2="3" />
         </svg>
-        Download CV
+        <span class="btn-dl-text">Download CV</span>
       </a>
-      <button class="nav-hamburger" onclick="toggleMobile()" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
     </div>
+    <button class="nav-hamburger" onclick="toggleMobile()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
   <!-- ════════════ HERO ════════════ -->
@@ -3428,6 +3458,25 @@
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
     setTimeout(() => document.querySelectorAll('#hero .reveal').forEach(el => el.classList.add('visible')), 80);
+
+    /* OVERFLOW DIAGNOSTIC */
+    setTimeout(() => {
+      const docW = document.documentElement.scrollWidth;
+      const vpW  = window.innerWidth;
+      if (docW <= vpW) { console.log('No overflow detected'); return; }
+      const offenders = [];
+      document.querySelectorAll('*').forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.right > vpW + 1) {
+          offenders.push({ tag: el.tagName, id: el.id||'', cls:[...el.classList].join(' ').slice(0,40), right:Math.round(r.right), width:Math.round(r.width) });
+        }
+      });
+      const box = document.createElement('div');
+      box.style.cssText = 'position:fixed;bottom:0;left:0;right:0;max-height:50vh;overflow-y:auto;background:rgba(0,0,0,0.95);color:#0f0;font:11px monospace;padding:10px;z-index:99999;border-top:2px solid red';
+      box.innerHTML = `<b style="color:red">OVERFLOW doc=${docW}px vp=${vpW}px (+${docW-vpW}px)</b><br><br>` +
+        offenders.map(o=>`<span style="color:#ff0">${o.tag}${o.id?'#'+o.id:''} .${o.cls}</span> right:${o.right} w:${o.width}<br>`).join('');
+      document.body.appendChild(box);
+    }, 500);
   </script>
 </body>
 
