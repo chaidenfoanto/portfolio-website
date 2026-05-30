@@ -1395,12 +1395,6 @@
       padding: 30px 0 80px;
     }
 
-    .carousel-viewport::before,
-    .carousel-viewport::after {
-      pointer-events: none;
-      z-index: 10;
-    }
-
     /* Adaptive fade edges */
     .carousel-viewport::before,
     .carousel-viewport::after {
@@ -1415,12 +1409,12 @@
 
     .carousel-viewport::before {
       left: 0;
-      background: linear-gradient(90deg, var(--proj-bg-from) 0%, transparent 100%)
+      background: linear-gradient(90deg, var(--proj-bg-from) 0%, transparent 100%);
     }
 
     .carousel-viewport::after {
       right: 0;
-      background: linear-gradient(270deg, var(--proj-bg-from) 0%, transparent 100%)
+      background: linear-gradient(270deg, var(--proj-bg-from) 0%, transparent 100%);
     }
 
     /* ── TRACK ── */
