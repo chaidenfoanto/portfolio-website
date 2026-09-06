@@ -266,21 +266,3 @@ const io = new IntersectionObserver(entries => {
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 setTimeout(() => document.querySelectorAll('#hero .reveal').forEach(el => el.classList.add('visible')), 80);
 
-/* OVERFLOW DIAGNOSTIC */
-setTimeout(() => {
-  const docW = document.documentElement.scrollWidth;
-  const vpW  = window.innerWidth;
-  if (docW <= vpW) { console.log('No overflow detected'); return; }
-  const offenders = [];
-  document.querySelectorAll('*').forEach(el => {
-    const r = el.getBoundingClientRect();
-    if (r.right > vpW + 1) {
-      offenders.push({ tag: el.tagName, id: el.id||'', cls:[...el.classList].join(' ').slice(0,40), right:Math.round(r.right), width:Math.round(r.width) });
-    }
-  });
-  const box = document.createElement('div');
-  box.style.cssText = 'position:fixed;bottom:0;left:0;right:0;max-height:50vh;overflow-y:auto;background:rgba(0,0,0,0.95);color:#0f0;font:11px monospace;padding:10px;z-index:99999;border-top:2px solid red';
-  box.innerHTML = `<b style="color:red">OVERFLOW doc=${docW}px vp=${vpW}px (+${docW-vpW}px)</b><br><br>` +
-    offenders.map(o=>`<span style="color:#ff0">${o.tag}${o.id?'#'+o.id:''} .${o.cls}</span> right:${o.right} w:${o.width}<br>`).join('');
-  document.body.appendChild(box);
-}, 500);
