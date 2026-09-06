@@ -16,10 +16,12 @@ document.querySelectorAll('a,button,.glass-card').forEach(el => {
 });
 
 /* ── THEME TOGGLE ── */
-let isDark = true;
+let isDark = localStorage.getItem('theme') !== 'light';
+document.body.classList.toggle('light-mode', !isDark);
 function toggleTheme() {
   isDark = !isDark;
   document.body.classList.toggle('light-mode', !isDark);
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
 }
 
 /* ── MOBILE MENU ── */
