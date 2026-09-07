@@ -32,19 +32,31 @@ function closeMobile() { document.getElementById('mobileMenu').classList.remove(
 const navbar = document.getElementById('navbar');
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.nav-links a');
-window.addEventListener('scroll', () => {
+const glowRightEl = document.getElementById('glowRight');
+const glowLeftEl = document.getElementById('glowLeft');
+const orb1El = document.getElementById('orb1');
+const orb2El = document.getElementById('orb2');
+const photoFloatEl = document.querySelector('.photo-float');
+
+let scrollTicking = false;
+function handleScroll() {
   navbar.classList.toggle('scrolled', window.scrollY > 50);
   let curSec = '';
   sections.forEach(s => { if (window.scrollY >= s.offsetTop - 130) curSec = s.id });
   navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + curSec));
   const sy = window.scrollY;
-  document.getElementById('glowRight').style.transform = `translateY(calc(-50% + ${sy * .22}px))`;
-  document.getElementById('glowLeft').style.transform = `translateY(${sy * .16}px)`;
-  const o1 = document.getElementById('orb1'), o2 = document.getElementById('orb2');
-  if (o1) o1.style.transform = `translate(${sy * .03}px,${-sy * .05}px)`;
-  if (o2) o2.style.transform = `translate(${-sy * .02}px,${sy * .04}px)`;
-  const pf = document.querySelector('.photo-float');
-  if (pf) pf.style.setProperty('--para-y', `${sy * .06}px`);
+  if (glowRightEl) glowRightEl.style.transform = `translateY(calc(-50% + ${sy * .22}px))`;
+  if (glowLeftEl) glowLeftEl.style.transform = `translateY(${sy * .16}px)`;
+  if (orb1El) orb1El.style.transform = `translate(${sy * .03}px,${-sy * .05}px)`;
+  if (orb2El) orb2El.style.transform = `translate(${-sy * .02}px,${sy * .04}px)`;
+  if (photoFloatEl) photoFloatEl.style.setProperty('--para-y', `${sy * .06}px`);
+  scrollTicking = false;
+}
+window.addEventListener('scroll', () => {
+  if (!scrollTicking) {
+    requestAnimationFrame(handleScroll);
+    scrollTicking = true;
+  }
 }, { passive: true });
 
 /* ══════════════════════════════════════
