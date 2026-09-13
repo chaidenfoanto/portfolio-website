@@ -17,11 +17,18 @@ document.querySelectorAll('a,button,.glass-card').forEach(el => {
 
 /* ── THEME TOGGLE ── */
 let isDark = localStorage.getItem('theme') !== 'light';
+const navLogo = document.getElementById('navLogo');
+function applyLogo() {
+  if (!navLogo) return;
+  navLogo.src = isDark ? 'images/logo-white-crf.png' : 'images/logo-black-crf.png';
+}
 document.body.classList.toggle('light-mode', !isDark);
+applyLogo();
 function toggleTheme() {
   isDark = !isDark;
   document.body.classList.toggle('light-mode', !isDark);
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  applyLogo();
 }
 
 /* ── MOBILE MENU ── */
