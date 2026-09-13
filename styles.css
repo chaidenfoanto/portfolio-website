@@ -245,10 +245,6 @@ nav.scrolled {
   display: block;
 }
 
-.light-mode .nav-logo {
-  content: url('/images/logo-black-crf.png');
-}
-
 .nav-links {
   display: flex;
   align-items: center;
