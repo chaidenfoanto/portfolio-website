@@ -191,7 +191,7 @@ window.addEventListener('scroll', () => {
     void track.offsetWidth;
     setX(baseX(), true);
 
-    setTimeout(() => { transitioning = false; }, 680);
+    setTimeout(() => { transitioning = false; }, 700);
   }
 
   function jumpTo(logicalIdx) {
@@ -211,7 +211,7 @@ window.addEventListener('scroll', () => {
       const interval = setInterval(() => {
         goBy(dir);
         if (++i >= remaining) clearInterval(interval);
-      }, 690);
+      }, 760);
     }
   }
 
