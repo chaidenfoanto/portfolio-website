@@ -272,7 +272,11 @@ window.addEventListener('scroll', () => {
   markActive();
   updateDots();
   startAuto();
-  window.addEventListener('resize', () => { setX(baseX(), false); });
+  let resizeTimer = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => setX(baseX(), false), 120);
+  });
 
   /* ── Small projects scroll ── */
   const smallScroll = document.getElementById('smallScroll');
