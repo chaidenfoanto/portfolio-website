@@ -245,6 +245,9 @@ nav.scrolled {
   display: block;
 }
 
+/* Logo swap for light mode is now handled in script.js (see toggleTheme),
+   for reliable cross-browser behavior instead of the CSS content:url() trick. */
+
 .nav-links {
   display: flex;
   align-items: center;
@@ -2151,8 +2154,11 @@ section {
   fill: none
 }
 
-/* ── MOBILE ── */
-@media(max-width:768px) {
+/* ── MOBILE & TABLET ──
+   Widened from 768px to 1024px: at tablet widths the 2-column desktop
+   layout (text + preview side-by-side) was being squeezed into a card
+   only ~50-60% of viewport width, causing text/image overlap. */
+@media(max-width:1024px) {
   .slide-inner {
     grid-template-columns: 1fr;
     height: auto
