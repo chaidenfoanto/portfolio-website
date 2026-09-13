@@ -32,8 +32,14 @@ function toggleTheme() {
 }
 
 /* ── MOBILE MENU ── */
-function toggleMobile() { document.getElementById('mobileMenu').classList.toggle('open') }
-function closeMobile() { document.getElementById('mobileMenu').classList.remove('open') }
+function toggleMobile() {
+  const isOpen = document.getElementById('mobileMenu').classList.toggle('open');
+  document.getElementById('navHamburger')?.setAttribute('aria-expanded', String(isOpen));
+}
+function closeMobile() {
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.getElementById('navHamburger')?.setAttribute('aria-expanded', 'false');
+}
 
 /* ── NAVBAR SCROLL + ACTIVE LINK ── */
 const navbar = document.getElementById('navbar');
