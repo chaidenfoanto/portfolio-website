@@ -1168,52 +1168,30 @@ section {
 }
 
 .github-card {
-  padding: 32px
+  padding: 32px;
+  text-align: center
 }
 
-/* Override github-calendar's default light-theme-only colors so it
-   reads correctly on our dark glass card (and stays legible in light mode). */
-.github-card .calendar {
+.github-chart-img {
   width: 100%;
-  font-family: 'DM Sans', sans-serif;
-  border: none;
-  background: transparent;
-  min-height: 0;
-  color: var(--text)
+  height: auto;
+  max-width: 900px;
+  border-radius: 8px
 }
 
-.github-card .calendar-graph text.wday,
-.github-card .calendar-graph text.month {
-  fill: var(--text-muted)
+.github-chart-link {
+  display: inline-block;
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--glass-border);
+  transition: color .2s, border-color .2s
 }
 
-.github-card .contrib-column {
-  border-color: var(--glass-border);
-  color: var(--text-muted)
-}
-
-.github-card .contrib-number {
-  color: var(--text)
-}
-
-.github-card .text-small,
-.github-card .contrib-footer .left.text-muted {
-  color: var(--text-muted)
-}
-
-.github-card .monospace {
-  color: var(--text)
-}
-
-.github-card .monospace a,
-.github-card .contrib-footer .left.text-muted a {
+.github-chart-link:hover {
   color: var(--text);
-  text-decoration: underline;
-  text-underline-offset: 2px
-}
-
-.github-card .contrib-legend {
-  color: var(--text-muted)
+  border-color: var(--text)
 }
 
 .skills-inner {
