@@ -290,7 +290,16 @@ window.addEventListener('scroll', () => {
   }
 })();
 
-/* ── REVEAL on scroll ──── REVEAL on scroll ──── REVEAL on scroll ──── REVEAL on scroll ── */
+
+if (typeof GitHubCalendar !== 'undefined') {
+  GitHubCalendar(".calendar", "chaidenfoanto", {
+    responsive: true,
+    tooltips: true,
+    global_stats: false,
+    cache: 86400 
+  });
+}
+
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target) } });
 }, { threshold: 0.12 });

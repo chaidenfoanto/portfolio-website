@@ -1169,29 +1169,95 @@ section {
 
 .github-card {
   padding: 32px;
-  text-align: center
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 1px 0 var(--proj-inner-glow) inset, 0 8px 40px rgba(0, 0, 0, 0.25)
 }
 
-.github-chart-img {
+.github-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 8%;
+  right: 8%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--proj-specular) 50%, transparent);
+  border-radius: 999px;
+  pointer-events: none
+}
+
+/* Override github-calendar's default light-theme-only colors so it
+   reads correctly on our dark glass card (and stays legible in light mode).
+   The grid itself (squares, rounded corners, Less/More legend, month/day
+   labels) is scraped straight from GitHub's own markup, so it already
+   matches GitHub's real look — we're only recoloring text to fit our theme. */
+.github-card .calendar {
   width: 100%;
-  height: auto;
-  max-width: 900px;
-  border-radius: 8px
+  font-family: 'DM Sans', sans-serif;
+  border: none;
+  background: transparent;
+  min-height: 0;
+  color: var(--text)
 }
 
-.github-chart-link {
-  display: inline-block;
-  margin-top: 20px;
-  font-size: 14px;
-  color: var(--text-muted);
-  text-decoration: none;
-  border-bottom: 1px solid var(--glass-border);
-  transition: color .2s, border-color .2s
+.github-card .calendar-graph text.wday,
+.github-card .calendar-graph text.month {
+  fill: var(--text-muted)
 }
 
-.github-chart-link:hover {
-  color: var(--text);
-  border-color: var(--text)
+.github-card .contrib-legend {
+  color: var(--text-muted)
+}
+
+/* Contribution squares: GitHub's real SVG rects (already have data-level
+   0-4), just re-skinned to fit our theme. rx/ry are CSS-overridable
+   presentation attributes, same idea as fill. */
+.github-card .ContributionCalendar-day {
+  rx: 3px !important;
+  ry: 3px !important
+}
+
+/* Empty-day squares default to GitHub's light-mode grey (#ebedf0),
+   which looks fine on our light mode but too pale/flat on dark mode —
+   swap them for a dark slate so they blend into the card.
+   !important because GitHub likely sets fill via inline style="...",
+   which otherwise beats any external stylesheet rule. */
+body:not(.light-mode) .github-card .ContributionCalendar-day[data-level="0"] {
+  fill: #2d333b !important
+}
+
+body:not(.light-mode) .github-card .contrib-legend .legend li:first-child {
+  background: #2d333b !important
+}
+
+/* GitHub's own "Skip to contributions year list" a11y link — visually
+   hidden (screen readers can still reach it), since we don't have
+   GitHub's base stylesheet that normally hides it. */
+.github-card .calendar a[href^="#year-link"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0
+}
+
+.github-profile-btn {
+  margin-top: 24px
+}
+
+.github-profile-btn-icon {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  vertical-align: -3px;
+  margin-right: 6px
 }
 
 .skills-inner {
