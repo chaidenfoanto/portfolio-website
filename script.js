@@ -290,6 +290,15 @@ window.addEventListener('scroll', () => {
   }
 })();
 
+/* ── GITHUB ACTIVITY CALENDAR ── */
+if (typeof GitHubCalendar !== 'undefined') {
+  GitHubCalendar(".calendar", "chaidenfoanto", {
+    responsive: true,
+    tooltips: true,
+    cache: 86400 // refetch at most once every 24h (cached in the visitor's browser)
+  });
+}
+
 /* ── REVEAL on scroll ──── REVEAL on scroll ──── REVEAL on scroll ──── REVEAL on scroll ── */
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target) } });
